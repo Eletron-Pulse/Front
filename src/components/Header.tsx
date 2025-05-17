@@ -1,34 +1,50 @@
-import Link from "next/link";
+"use client"
+import Link from "next/link"
+import { useClienteStore } from "@/Context/ClienteContext"
+import { useRouter } from "next/navigation"
 
 export function Header() {
+    const { cliente, deslogaCliente } = useClienteStore()
+    const router = useRouter()
+
+    function clienteSair() {
+        if (confirm("Confirma saída do sistema?")) {
+            deslogaCliente()
+            if (localStorage.getItem("clienteKey")) {
+                localStorage.removeItem("clienteKey")
+            }
+            router.push("/login")
+        }
+    }
+
     return (
         <nav className="border-gray-500 bg-gray-700 dark:bg-gray-900 dark:border-orange-700">
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-                {}
                 <Link href="/" className="flex items-center space-x-5 rtl:space-x-reverse">
-                    <img src="./logo.png" className="h-22" alt="Logo" />
+                    <img src="/logo.png" className="h-12" alt="Logo" />
                     <span className="self-center text-2xl font-semibold whitespace-nowrap text-white dark:text-white">
-                        Minha Loja de eletreônicos
+                        Minha Loja de eletrônicos
                     </span>
                 </Link>
-
-                {}
                 <div className="flex items-center space-x-12">
-                    {}
-                    <Link
-                        href="/login"
-                        className="flex items-center space-x-2 text-white rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                    >
-                        <img
-                            src="/imageLogin.jpeg" 
-                            alt="Foto do Usuário"
-                            className="w-8 h-8 rounded-full border-2 border-white"
-                        />
-                        <span>Entre ou cadastre-se</span>
-                    </Link>
-
-                    {}
-                    <Link href="/carrinho" className="text-white hover:text-gray-300">
+                    {cliente.id ? (
+                        <>
+                            <span className="text-white font-bold">
+                                {cliente.nome}
+                            </span>
+                            <Link href="/comentarios" className="text-white font-bold bg-[#845bdf] hover:bg-[#6b46c1] focus:ring-2 focus:outline-none focus:ring-purple-300 rounded-lg text-sm w-full sm:w-auto px-3 py-2 text-center dark:bg-gray-500 dark:hover:bg-gray-600 dark:focus:ring-gray-700">
+                                Meus Comentários
+                            </Link>
+                            <span className="cursor-pointer font-bold text-white hover:text-[#845bdf]" onClick={clienteSair}>
+                                Sair
+                            </span>
+                        </>
+                    ) : (
+                        <Link href="/login" className="block py-2 px-3 md:p-0 text-white rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-[#845bdf] dark:text-white md:dark:hover:text-[#845bdf] dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+                            Entre ou cadastre-se
+                        </Link>
+                    )}
+                    <Link href="/carrinho" className="text-white hover:text-[#845bdf]">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -47,5 +63,5 @@ export function Header() {
                 </div>
             </div>
         </nav>
-    );
+    )
 }
