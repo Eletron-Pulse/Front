@@ -1,7 +1,7 @@
 'use client'
 import './page.css'
 import { useEffect, useState } from "react";
-import { useClienteStore } from "@/context/ClienteContext";
+import { useClienteStore } from "@/Context/ClienteContext";
 import { ComentarioItf } from "@/utils/types/ComentarioItf";
 
 export default function Comentarios() {
@@ -10,9 +10,11 @@ export default function Comentarios() {
 
   useEffect(() => {
     async function buscaDados() {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/comentarios/${cliente.id}`)
+      // Busca todos os comentários e filtra apenas os do cliente logado
+      const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/comentarios`)
       const dados = await response.json()
-      setComentarios(dados)
+      const comentariosCliente = dados.filter((comentario: any) => comentario.clienteId === cliente.id)
+      setComentarios(comentariosCliente)
     }
     if (cliente.id) buscaDados()
   }, [cliente.id])
@@ -27,15 +29,19 @@ export default function Comentarios() {
   const comentariosTable = comentarios.map(comentario => (
     <tr key={comentario.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
       <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-        <p><b>{comentario.produto.marca.nome} - {comentario.produto.nome}</b></p>
-        <p className='mt-3'>Categoria: {comentario.produto.categoria} -
-          R$: {Number(comentario.produto.preco).toLocaleString("pt-br", { minimumFractionDigits: 2 })}</p>
+        <p><b>{comentario.produto?.marca?.nome ?? '-'} - {comentario.produto?.nome ?? '-'}</b></p>
+        <p className='mt-3'>Categoria: {comentario.produto?.categoria ?? '-'} -
+          R$: {comentario.produto ? Number(comentario.produto.preco).toLocaleString("pt-br", { minimumFractionDigits: 2 }) : '-'}</p>
       </th>
       <td className="px-6 py-4">
-        <img src={comentario.produto.imagem} className="imagemProduto" alt={`Imagem de ${comentario.produto.nome}`} />
+        {comentario.produto?.imagem ? (
+          <img src={comentario.produto.imagem} className="imagemProduto" alt={`Imagem de ${comentario.produto.nome}`} />
+        ) : (
+          <span>-</span>
+        )}
       </td>
       <td className="px-6 py-4">
-        <p><b>{comentario.descricao}</b></p>
+        <p><b>{(comentario as any).texto ?? comentario.descricao ?? '-'}</b></p>
         <p><i>Enviado em: {dataDMA(comentario.createdAt)}</i></p>
       </td>
       <td className="px-6 py-4">
