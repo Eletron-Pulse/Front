@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { useClienteStore } from "@/Context/ClienteContext"
 import { useRouter } from "next/navigation"
+import { useState } from "react"
 
 type Inputs = {
     email: string
@@ -52,6 +53,8 @@ export default function Login() {
         }
     }
 
+    const [showPassword, setShowPassword] = useState(false)
+
     return (
         <section className="bg-gray-50 dark:bg-gray-900 min-h-screen flex items-center justify-center">
             <div className="flex flex-col items-center px-6 py-8 mx-auto w-full max-w-md">
@@ -70,10 +73,26 @@ export default function Login() {
                             </div>
                             <div>
                                 <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Senha de Acesso</label>
-                                <input type="password" id="password"
-                                       className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-[#845bdf] focus:border-[#845bdf] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#845bdf] dark:focus:border-[#845bdf]"
-                                       required
-                                       {...register("senha")} />
+                                <div className="relative">
+                                    <input type={showPassword ? "text" : "password"} id="password"
+                                           className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-[#845bdf] focus:border-[#845bdf] block w-full p-2.5 pr-10 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#845bdf] dark:focus:border-[#845bdf]"
+                                           required
+                                           {...register("senha")} />
+                                    <button type="button" tabIndex={-1} onClick={() => setShowPassword(!showPassword)}
+                                            className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 dark:text-gray-300 focus:outline-none"
+                                            aria-label={showPassword ? "Ocultar senha" : "Exibir senha"}>
+                                        {showPassword ? (
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M3.98 8.223A10.477 10.477 0 0 0 2.25 12c2.036 3.952 6.108 6.75 9.75 6.75 1.563 0 3.06-.362 4.396-1.02M6.53 6.53A6.75 6.75 0 0 1 12 5.25c3.642 0 7.714 2.798 9.75 6.75a10.478 10.478 0 0 1-2.042 2.727M6.53 6.53l10.94 10.94M6.53 6.53A10.478 10.478 0 0 0 2.25 12c.457.887 1.05 1.72 1.73 2.477m2.55-2.55l10.94 10.94" />
+                                            </svg>
+                                        ) : (
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12c2.036-3.952 6.108-6.75 9.75-6.75s7.714 2.798 9.75 6.75c-2.036 3.952-6.108 6.75-9.75 6.75S4.286 15.952 2.25 12z" />
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0z" />
+                                            </svg>
+                                        )}
+                                    </button>
+                                </div>
                             </div>
                             <div className="flex items-center justify-between">
                                 <div className="flex items-start">
