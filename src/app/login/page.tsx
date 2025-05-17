@@ -87,7 +87,7 @@ export default function Login() {
                                         <label htmlFor="remember" className="text-gray-500 dark:text-gray-300">Manter Conectado</label>
                                     </div>
                                 </div>
-                                <a href="#" className="text-sm font-medium text-[#845bdf] hover:underline dark:text-[#845bdf]">Esqueceu sua senha?</a>
+                                <a href="/recuperar-senha" className="text-sm font-medium text-[#845bdf] hover:underline dark:text-[#845bdf]">Esqueceu sua senha?</a>
                             </div>
                             <button type="submit" className="w-full text-white bg-[#845bdf] hover:bg-[#6b46c1] focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-[#845bdf] dark:hover:bg-[#6b46c1] dark:focus:ring-purple-800">
                                 Entrar
