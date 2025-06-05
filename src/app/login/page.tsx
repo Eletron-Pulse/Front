@@ -112,7 +112,7 @@ export default function Login() {
                                 Entrar
                             </button>
                             <p className="text-sm font-light text-gray-500 dark:text-gray-400 text-center">
-                                Ainda não possui conta? <a href="#" className="font-medium text-[#845bdf] hover:underline dark:text-[#845bdf]">Cadastre-se</a>
+                                Ainda não possui conta? <a href="/cadastrar-cliente" className="font-medium text-[#845bdf] hover:underline dark:text-[#845bdf]">Cadastre-se</a>
                             </p>
                         </form>
                     </div>
