@@ -23,15 +23,26 @@ export default function Detalhes() {
       const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/produtos/${params.produto_id}`)
       const dados = await response.json()
       setProduto(dados)
+      // Debug: veja o que chega do backend
+      console.log('Produto carregado:', dados)
+      if (dados?.imagens) {
+        console.log('Imagens do produto:', dados.imagens)
+      }
     }
     buscaDados()
   }, [params.produto_id])
 
+  const fallbackImg = "/logo.png" // imagem padrão caso a do Cloudinary quebre
+
   const listaFotos = produto?.imagens?.map(foto => (
     <div key={foto.id}>
-      <img src={foto.url} alt={foto.descricao}
+      <img
+        src={foto.url}
+        alt={foto.descricao}
         title={foto.descricao}
-        className="h-52 max-w-80 rounded-lg" />
+        className="h-52 max-w-80 rounded-lg"
+        onError={e => (e.currentTarget.src = fallbackImg)}
+      />
     </div>
   ))
 
@@ -90,6 +101,7 @@ export default function Detalhes() {
                   className="object-cover w-full md:w-1/2 rounded-lg shadow-md"
                   src={produto.imagem}
                   alt={`Imagem do Produto ${produto.nome}`}
+                  onError={e => (e.currentTarget.src = fallbackImg)}
                 />
                 <div className="flex flex-col justify-between p-6 md:ml-6 w-full">
                   <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
@@ -151,7 +163,7 @@ export default function Detalhes() {
                     </>
                     :
                     <h2 className="mb-2 text-xl tracking-tight text-gray-900 dark:text-white">
-                      😎 Gostou? Identifique-se e deixe um comentário!
+                      Identifique-se e deixe um comentário!
                     </h2>
                   }
                 </div>
@@ -160,7 +172,7 @@ export default function Detalhes() {
           </section>
 
           <div className="mt-8">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Imagens do Produto</h2>
+            {/* <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4"></h2> */}
             <div className="flex overflow-x-auto space-x-4">{listaFotos}</div>
           </div>
         </div>
