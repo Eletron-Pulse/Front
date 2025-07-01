@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
+import Image from "next/image"
 
 interface Inputs {
   nome: string
@@ -42,31 +43,32 @@ export default function CadastrarCliente() {
   }
 
   return (
-    <section className="bg-gray-50 dark:bg-gray-900 min-h-screen flex items-center justify-center">
+    <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#845bdf]/30 via-[#5ce1e6]/20 to-[#232946]/40 dark:from-[#232946] dark:via-[#845bdf]/20 dark:to-[#121212] transition-colors duration-500">
       <div className="flex flex-col items-center px-6 py-8 mx-auto w-full max-w-md">
-        <div className="w-full bg-white rounded-lg shadow dark:border dark:bg-gray-800 dark:border-gray-700">
-          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <h1 className="text-3xl font-extrabold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">
-              Cadastre-se
+        <div className="w-full bg-white/90 dark:bg-gray-900/90 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800 backdrop-blur-md">
+          <div className="p-8 space-y-6">
+            <h1 className="text-3xl font-extrabold leading-tight tracking-tight text-gray-900 dark:text-white text-center mb-2">
+              Crie sua conta
             </h1>
-            <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit(onSubmit)}>
+            <p className="text-center text-gray-500 dark:text-gray-400 mb-6">Preencha os dados para se cadastrar</p>
+            <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
               <div>
                 <label htmlFor="nome" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nome</label>
                 <input type="text" id="nome"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-[#845bdf] focus:border-[#845bdf] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#845bdf] dark:focus:border-[#845bdf]"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-[#845bdf] focus:border-[#845bdf] block w-full p-2.5 dark:bg-gray-800 dark:border-gray-700 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#845bdf] dark:focus:border-[#845bdf] transition-colors"
                   required {...register("nome")} />
               </div>
               <div>
                 <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">E-mail</label>
                 <input type="email" id="email"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-[#845bdf] focus:border-[#845bdf] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#845bdf] dark:focus:border-[#845bdf]"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-[#845bdf] focus:border-[#845bdf] block w-full p-2.5 dark:bg-gray-800 dark:border-gray-700 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#845bdf] dark:focus:border-[#845bdf] transition-colors"
                   required {...register("email")} />
               </div>
               <div>
                 <label htmlFor="senha" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Senha</label>
                 <div className="relative">
                   <input type={showPassword ? "text" : "password"} id="senha"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-[#845bdf] focus:border-[#845bdf] block w-full p-2.5 pr-10 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#845bdf] dark:focus:border-[#845bdf]"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-[#845bdf] focus:border-[#845bdf] block w-full p-2.5 pr-10 dark:bg-gray-800 dark:border-gray-700 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#845bdf] dark:focus:border-[#845bdf] transition-colors"
                     required {...register("senha")} />
                   <button type="button" tabIndex={-1} onClick={() => setShowPassword(!showPassword)}
                     className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 dark:text-gray-300 focus:outline-none"
@@ -88,7 +90,7 @@ export default function CadastrarCliente() {
                 <label htmlFor="confirmarSenha" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirmar Senha</label>
                 <div className="relative">
                   <input type={showConfirmPassword ? "text" : "password"} id="confirmarSenha"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-[#845bdf] focus:border-[#845bdf] block w-full p-2.5 pr-10 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#845bdf] dark:focus:border-[#845bdf]"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-[#845bdf] focus:border-[#845bdf] block w-full p-2.5 pr-10 dark:bg-gray-800 dark:border-gray-700 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#845bdf] dark:focus:border-[#845bdf] transition-colors"
                     required {...register("confirmarSenha")} />
                   <button type="button" tabIndex={-1} onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                     className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 dark:text-gray-300 focus:outline-none"
@@ -106,11 +108,11 @@ export default function CadastrarCliente() {
                   </button>
                 </div>
               </div>
-              <button type="submit" className="w-full text-white bg-[#845bdf] hover:bg-[#6b46c1] focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-[#845bdf] dark:hover:bg-[#6b46c1] dark:focus:ring-purple-800">
+              <button type="submit" className="w-full text-white bg-gradient-to-r from-[#845bdf] to-[#5ce1e6] hover:from-[#6b46c1] hover:to-[#3bc9db] focus:ring-4 focus:outline-none focus:ring-purple-300 font-bold rounded-lg text-base px-5 py-3 text-center shadow-lg transition-all duration-300 dark:from-[#845bdf] dark:to-[#232946] dark:hover:from-[#6b46c1] dark:hover:to-[#121212] dark:focus:ring-purple-800">
                 Cadastrar
               </button>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400 text-center">
-                Já possui conta? <a href="/login" className="font-medium text-[#845bdf] hover:underline dark:text-[#845bdf]">Entrar</a>
+                Já possui conta? <a href="/login" className="font-medium text-[#845bdf] hover:underline dark:text-[#5ce1e6]">Entrar</a>
               </p>
             </form>
           </div>

@@ -35,7 +35,6 @@ export function InputPesquisa({ setProdutos }: InputPesquisaProps) {
         return;
       }
 
-
       setProdutos(dados);
     } catch (error) {
       console.error("Erro ao buscar produtos:", error);
@@ -59,52 +58,81 @@ export function InputPesquisa({ setProdutos }: InputPesquisaProps) {
   }
 
   return (
-    <div className="flex mx-auto max-w-5xl mt-3">
-      <form className="flex-1" onSubmit={handleSubmit(enviaPesquisa)}>
-        <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">
-          Search
-        </label>
-        <div className="relative">
-          <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-            <svg
-              className="w-4 h-4 text-gray-500 dark:text-gray-400"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 20 20"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 p-6 backdrop-blur-sm">
+        <div className="flex flex-col lg:flex-row gap-4 items-center">
+          {/* Formulário de Pesquisa */}
+          <form className="flex-1 w-full" onSubmit={handleSubmit(enviaPesquisa)}>
+            <div className="relative group">
+              {/* Ícone de Pesquisa */}
+              <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+                <svg
+                  className="w-5 h-5 text-gray-400 group-focus-within:text-[#845bdf] transition-colors duration-300"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+              </div>
+
+              {/* Input de Pesquisa */}
+              <input
+                type="search"
+                id="default-search"
+                className="block w-full pl-12 pr-32 py-4 text-gray-900 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-[#845bdf] focus:border-[#845bdf] dark:text-white dark:placeholder-gray-400 dark:focus:ring-[#845bdf] dark:focus:border-[#845bdf] transition-all duration-300 shadow-sm hover:shadow-md"
+                placeholder="Busque por nome, categoria ou preço máximo..."
+                required
+                {...register("termo")}
               />
-            </svg>
-          </div>
-          <input
-            type="search"
-            id="default-search"
-            className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Nome, categoria ou preço máximo"
-            required
-            {...register("termo")}
-          />
+
+              {/* Botão de Pesquisa */}
+              <button
+                type="submit"
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-[#845bdf] to-[#6b46c1] hover:from-[#6b46c1] hover:to-[#845bdf] text-white font-medium rounded-lg px-6 py-2.5 text-sm transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-[#845bdf]/25 focus:outline-none focus:ring-2 focus:ring-[#845bdf] focus:ring-offset-2 focus:ring-offset-gray-50 dark:focus:ring-offset-gray-800"
+              >
+                <span className="flex items-center space-x-2">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                  <span>Buscar</span>
+                </span>
+              </button>
+            </div>
+          </form>
+
+          {/* Botão Exibir Produtos */}
           <button
-            type="submit"
-            className="cursor-pointer text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            type="button"
+            onClick={mostraDestaques}
+            className="w-full lg:w-auto bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-600 hover:from-gray-200 hover:to-gray-300 dark:hover:from-gray-600 dark:hover:to-gray-500 text-gray-700 dark:text-gray-200 font-medium rounded-xl px-8 py-4 text-sm transition-all duration-300 transform hover:scale-105 hover:shadow-lg border border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#845bdf] focus:ring-offset-2 focus:ring-offset-gray-50 dark:focus:ring-offset-gray-800"
           >
-            Pesquisar
+            <span className="flex items-center justify-center space-x-2">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+              </svg>
+              <span>Ver Todos</span>
+            </span>
           </button>
         </div>
-      </form>
-      <button
-        type="button"
-        className="cursor-pointer ms-3 mt-2 focus:outline-none text-white bg-[#845bdf] hover:bg-[#6b46c1] focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:focus:ring-purple-900"
-        onClick={mostraDestaques}
-      >
-        Exibir Produtos
-      </button>
+
+        {/* Dicas de Pesquisa */}
+        <div className="mt-4 flex flex-wrap gap-2 text-xs text-gray-500 dark:text-gray-400">
+          <span className="flex items-center space-x-1">
+            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>Dica: Digite pelo menos 2 caracteres</span>
+          </span>
+          <span className="hidden sm:inline">•</span>
+          <span className="hidden sm:inline">Ex: "smartphone", "notebook", "1000"</span>
+        </div>
+      </div>
     </div>
   );
 }
